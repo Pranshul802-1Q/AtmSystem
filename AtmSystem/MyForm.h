@@ -3,6 +3,10 @@
 
 
 
+
+
+
+
 namespace AtmSystem {
 
 	using namespace System;
@@ -11,7 +15,11 @@ namespace AtmSystem {
 	using namespace System::Windows::Forms;
 	using namespace System::Data;
 	using namespace System::Drawing;
-	using namespace std;
+	using namespace System::Text;
+	//using namespace std;
+	using namespace System::Data::SqlClient;
+
+	
 
 	
 
@@ -35,6 +43,7 @@ namespace AtmSystem {
 
 
 			InitializeComponent();
+			 
 			
 			//
 			//TODO: Add the constructor code here
@@ -86,8 +95,12 @@ namespace AtmSystem {
 	private: System::Windows::Forms::Button^ button8;
 	private: System::Windows::Forms::Button^ button7;
 	private: System::Windows::Forms::PictureBox^ pictureBox1;
-	private: System::Windows::Forms::TextBox^ textBox1;
+
 	private: System::Windows::Forms::Button^ button23;
+	public: System::Windows::Forms::TextBox^ textBox1;
+	private: System::Windows::Forms::TextBox^ textBox2;
+	public:
+
 
 
 
@@ -100,6 +113,7 @@ namespace AtmSystem {
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>
+		
 		System::ComponentModel::Container^ components;
 
 #pragma region Windows Form Designer generated code
@@ -130,8 +144,8 @@ namespace AtmSystem {
 			this->button8 = (gcnew System::Windows::Forms::Button());
 			this->button7 = (gcnew System::Windows::Forms::Button());
 			this->panel3 = (gcnew System::Windows::Forms::Panel());
-			this->button23 = (gcnew System::Windows::Forms::Button());
 			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
+			this->button23 = (gcnew System::Windows::Forms::Button());
 			this->pictureBox1 = (gcnew System::Windows::Forms::PictureBox());
 			this->pictureBox2 = (gcnew System::Windows::Forms::PictureBox());
 			this->button6 = (gcnew System::Windows::Forms::Button());
@@ -140,6 +154,7 @@ namespace AtmSystem {
 			this->button3 = (gcnew System::Windows::Forms::Button());
 			this->button2 = (gcnew System::Windows::Forms::Button());
 			this->button1 = (gcnew System::Windows::Forms::Button());
+			this->textBox2 = (gcnew System::Windows::Forms::TextBox());
 			this->panel1->SuspendLayout();
 			this->panel2->SuspendLayout();
 			this->panel4->SuspendLayout();
@@ -152,6 +167,7 @@ namespace AtmSystem {
 			// 
 			this->panel1->BackColor = System::Drawing::Color::Teal;
 			this->panel1->BorderStyle = System::Windows::Forms::BorderStyle::Fixed3D;
+			this->panel1->Controls->Add(this->textBox2);
 			this->panel1->Controls->Add(this->panel2);
 			this->panel1->Location = System::Drawing::Point(44, 29);
 			this->panel1->Name = L"panel1";
@@ -358,10 +374,10 @@ namespace AtmSystem {
 			// 
 			// panel3
 			// 
-			this->panel3->BackColor = System::Drawing::Color::LightSlateGray;
+			this->panel3->BackColor = System::Drawing::Color::Transparent;
 			this->panel3->BorderStyle = System::Windows::Forms::BorderStyle::Fixed3D;
-			this->panel3->Controls->Add(this->button23);
 			this->panel3->Controls->Add(this->textBox1);
+			this->panel3->Controls->Add(this->button23);
 			this->panel3->Controls->Add(this->pictureBox1);
 			this->panel3->Controls->Add(this->pictureBox2);
 			this->panel3->Controls->Add(this->button6);
@@ -370,11 +386,23 @@ namespace AtmSystem {
 			this->panel3->Controls->Add(this->button3);
 			this->panel3->Controls->Add(this->button2);
 			this->panel3->Controls->Add(this->button1);
+			this->panel3->ForeColor = System::Drawing::Color::Black;
 			this->panel3->Location = System::Drawing::Point(27, 24);
 			this->panel3->Margin = System::Windows::Forms::Padding(5);
 			this->panel3->Name = L"panel3";
 			this->panel3->Size = System::Drawing::Size(660, 393);
 			this->panel3->TabIndex = 0;
+			// 
+			// textBox1
+			// 
+			this->textBox1->BackColor = System::Drawing::Color::DarkSlateGray;
+			this->textBox1->BorderStyle = System::Windows::Forms::BorderStyle::None;
+			this->textBox1->Location = System::Drawing::Point(3, 13);
+			this->textBox1->Multiline = true;
+			this->textBox1->Name = L"textBox1";
+			this->textBox1->ReadOnly = true;
+			this->textBox1->Size = System::Drawing::Size(163, 31);
+			this->textBox1->TabIndex = 11;
 			// 
 			// button23
 			// 
@@ -383,7 +411,7 @@ namespace AtmSystem {
 			this->button23->CausesValidation = false;
 			this->button23->Font = (gcnew System::Drawing::Font(L"MV Boli", 10.2F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->button23->Location = System::Drawing::Point(275, 279);
+			this->button23->Location = System::Drawing::Point(275, 301);
 			this->button23->Name = L"button23";
 			this->button23->Size = System::Drawing::Size(96, 36);
 			this->button23->TabIndex = 10;
@@ -391,20 +419,13 @@ namespace AtmSystem {
 			this->button23->UseVisualStyleBackColor = false;
 			this->button23->Click += gcnew System::EventHandler(this, &MyForm::button23_Click);
 			// 
-			// textBox1
-			// 
-			this->textBox1->Location = System::Drawing::Point(41, 31);
-			this->textBox1->Name = L"textBox1";
-			this->textBox1->Size = System::Drawing::Size(91, 22);
-			this->textBox1->TabIndex = 9;
-			// 
 			// pictureBox1
 			// 
 			this->pictureBox1->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox1.BackgroundImage")));
 			this->pictureBox1->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
-			this->pictureBox1->Location = System::Drawing::Point(156, 53);
+			this->pictureBox1->Location = System::Drawing::Point(139, 53);
 			this->pictureBox1->Name = L"pictureBox1";
-			this->pictureBox1->Size = System::Drawing::Size(345, 272);
+			this->pictureBox1->Size = System::Drawing::Size(376, 294);
 			this->pictureBox1->TabIndex = 8;
 			this->pictureBox1->TabStop = false;
 			// 
@@ -435,7 +456,7 @@ namespace AtmSystem {
 			// 
 			this->button5->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"button5.BackgroundImage")));
 			this->button5->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
-			this->button5->Location = System::Drawing::Point(521, 170);
+			this->button5->Location = System::Drawing::Point(520, 182);
 			this->button5->Name = L"button5";
 			this->button5->Size = System::Drawing::Size(122, 36);
 			this->button5->TabIndex = 5;
@@ -445,7 +466,7 @@ namespace AtmSystem {
 			// 
 			this->button4->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"button4.BackgroundImage")));
 			this->button4->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
-			this->button4->Location = System::Drawing::Point(521, 81);
+			this->button4->Location = System::Drawing::Point(520, 95);
 			this->button4->Name = L"button4";
 			this->button4->Size = System::Drawing::Size(124, 36);
 			this->button4->TabIndex = 4;
@@ -455,7 +476,7 @@ namespace AtmSystem {
 			// 
 			this->button3->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"button3.BackgroundImage")));
 			this->button3->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
-			this->button3->Location = System::Drawing::Point(9, 263);
+			this->button3->Location = System::Drawing::Point(9, 261);
 			this->button3->Name = L"button3";
 			this->button3->Size = System::Drawing::Size(124, 38);
 			this->button3->TabIndex = 3;
@@ -466,7 +487,7 @@ namespace AtmSystem {
 			// 
 			this->button2->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"button2.BackgroundImage")));
 			this->button2->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
-			this->button2->Location = System::Drawing::Point(7, 170);
+			this->button2->Location = System::Drawing::Point(7, 180);
 			this->button2->Name = L"button2";
 			this->button2->Size = System::Drawing::Size(126, 38);
 			this->button2->TabIndex = 2;
@@ -477,11 +498,18 @@ namespace AtmSystem {
 			this->button1->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"button1.BackgroundImage")));
 			this->button1->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
 			this->button1->Cursor = System::Windows::Forms::Cursors::Default;
-			this->button1->Location = System::Drawing::Point(7, 81);
+			this->button1->Location = System::Drawing::Point(7, 95);
 			this->button1->Name = L"button1";
 			this->button1->Size = System::Drawing::Size(126, 36);
 			this->button1->TabIndex = 1;
 			this->button1->UseVisualStyleBackColor = true;
+			// 
+			// textBox2
+			// 
+			this->textBox2->Location = System::Drawing::Point(480, 9);
+			this->textBox2->Name = L"textBox2";
+			this->textBox2->Size = System::Drawing::Size(100, 22);
+			this->textBox2->TabIndex = 1;
 			// 
 			// MyForm
 			// 
@@ -493,6 +521,7 @@ namespace AtmSystem {
 			this->Text = L"MyForm";
 			this->Load += gcnew System::EventHandler(this, &MyForm::MyForm_Load);
 			this->panel1->ResumeLayout(false);
+			this->panel1->PerformLayout();
 			this->panel2->ResumeLayout(false);
 			this->panel4->ResumeLayout(false);
 			this->panel3->ResumeLayout(false);
@@ -509,6 +538,7 @@ namespace AtmSystem {
 #pragma endregion
 
 	private: System::Void MyForm_Load(System::Object^ sender, System::EventArgs^ e) {
+		disable();
 
 		char commport[] = "\\\\.\\COM3";
 		char* port = commport;
@@ -526,7 +556,14 @@ namespace AtmSystem {
 
 		MyForm:Show();
 		Application::DoEvents();
-		
+	    //constring = "Data Source=DESKTOP-L186BBJ;Initial Catalog=project;Integrated Security=True";
+		  SqlConnection^ con = gcnew SqlConnection("Data Source=DESKTOP-L186BBJ;Initial Catalog=project;Integrated Security=True");
+			
+		  con->Open();
+		  if (con->State == System::Data::ConnectionState::Open) {
+			  textBox2->AppendText("DB Connected");
+		  }
+		 
 
 		
 	}
@@ -574,32 +611,35 @@ namespace AtmSystem {
 			   SerialPort arduino(port);  
 
 
-			   if (arduino.isConnected()) {
-				  textBox1->AppendText("Connection Established2");
-			   }
-			   else {
-				   textBox1->AppendText("Error in port2");
-			   }
+			  // if (arduino.isConnected()) {
+				//  textBox1->AppendText("Connection Established2");
+			   //}
+			   //else {
+				 //  textBox1->AppendText("Error in port2");
+			   //}
 			   arduino.readSerialPort(output, MAX_DATA_LENGTH);
 			   
 
 			   while ((*output != 'P') || (*output != 'R') || (*output != 'K')) {
 				   arduino.readSerialPort(output, MAX_DATA_LENGTH);
+				   Application::DoEvents();
 
 
 				   if (*output == 'P') {
 					   pictureBox1->BackgroundImage = Image::FromFile("c:\\SECOND SCREEN.jpeg");
-					   textBox1->AppendText("Pranshul");
+					   textBox1->Text=("Pranshul Thapliyal");
 					   break;
 
 				   }
 				   else if (*output == 'R') {
-					   textBox1->AppendText("Rohan");
+					   pictureBox1->BackgroundImage = Image::FromFile("c:\\SECOND SCREEN.jpeg");
+					   textBox1->Text=("Rohan Rautela");
 					   break;
 				   }
 
 				   else if (*output == 'K') {
-					   textBox1->AppendText("Kritarth");
+					   pictureBox1->BackgroundImage = Image::FromFile("c:\\SECOND SCREEN.jpeg");
+					   textBox1->Text=("Kritarth Khanduri");
 					   break;
 				   }
 			   }
@@ -608,6 +648,36 @@ namespace AtmSystem {
 
 				  private: System::Void button24_Click(System::Object^ sender, System::EventArgs^ e) {
 				  }
+
+						 private: void disable() {
+
+
+
+							 button1->Enabled = false;
+							 button2->Enabled = false;
+							 button3->Enabled = false;
+							 button4->Enabled = false;
+							 button5->Enabled = false;
+							 button6->Enabled = false;
+							 button7->Enabled = false;
+							 button8->Enabled = false;
+							 button9->Enabled = false;
+							 button10->Enabled = false;
+							 button11->Enabled = false;
+							 button12->Enabled = false;
+							 button13->Enabled = false;
+							 button14->Enabled = false;
+							 button15->Enabled = false;
+							 button16->Enabled = false;
+							 button17->Enabled = false;
+							 button18->Enabled = false;
+							 button19->Enabled = false;
+							 button20->Enabled = false;
+							 button21->Enabled = false;
+							 button22->Enabled = false;
+
+						 }
+
 
 };
 }
