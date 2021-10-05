@@ -2,6 +2,9 @@
 #include "SerialPort.h"
 
 
+int id;
+
+
 
 
 
@@ -125,6 +128,7 @@ namespace AtmSystem {
 		{
 			System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(MyForm::typeid));
 			this->panel1 = (gcnew System::Windows::Forms::Panel());
+			this->textBox2 = (gcnew System::Windows::Forms::TextBox());
 			this->panel2 = (gcnew System::Windows::Forms::Panel());
 			this->panel4 = (gcnew System::Windows::Forms::Panel());
 			this->button22 = (gcnew System::Windows::Forms::Button());
@@ -154,7 +158,6 @@ namespace AtmSystem {
 			this->button3 = (gcnew System::Windows::Forms::Button());
 			this->button2 = (gcnew System::Windows::Forms::Button());
 			this->button1 = (gcnew System::Windows::Forms::Button());
-			this->textBox2 = (gcnew System::Windows::Forms::TextBox());
 			this->panel1->SuspendLayout();
 			this->panel2->SuspendLayout();
 			this->panel4->SuspendLayout();
@@ -173,6 +176,13 @@ namespace AtmSystem {
 			this->panel1->Name = L"panel1";
 			this->panel1->Size = System::Drawing::Size(788, 956);
 			this->panel1->TabIndex = 0;
+			// 
+			// textBox2
+			// 
+			this->textBox2->Location = System::Drawing::Point(480, 9);
+			this->textBox2->Name = L"textBox2";
+			this->textBox2->Size = System::Drawing::Size(100, 22);
+			this->textBox2->TabIndex = 1;
 			// 
 			// panel2
 			// 
@@ -471,6 +481,7 @@ namespace AtmSystem {
 			this->button4->Size = System::Drawing::Size(124, 36);
 			this->button4->TabIndex = 4;
 			this->button4->UseVisualStyleBackColor = true;
+			this->button4->Click += gcnew System::EventHandler(this, &MyForm::button4_Click);
 			// 
 			// button3
 			// 
@@ -504,13 +515,6 @@ namespace AtmSystem {
 			this->button1->TabIndex = 1;
 			this->button1->UseVisualStyleBackColor = true;
 			// 
-			// textBox2
-			// 
-			this->textBox2->Location = System::Drawing::Point(480, 9);
-			this->textBox2->Name = L"textBox2";
-			this->textBox2->Size = System::Drawing::Size(100, 22);
-			this->textBox2->TabIndex = 1;
-			// 
 			// MyForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
@@ -540,7 +544,7 @@ namespace AtmSystem {
 	private: System::Void MyForm_Load(System::Object^ sender, System::EventArgs^ e) {
 		disable();
 
-		char commport[] = "\\\\.\\COM3";
+		char commport[] = "\\\\.\\COM5";
 		char* port = commport;
 
 
@@ -604,7 +608,7 @@ namespace AtmSystem {
 
 		   private: void function() {
 			   char output[MAX_DATA_LENGTH];
-			   char commport[] = "\\\\.\\COM3";
+			   char commport[] = "\\\\.\\COM5";
 			   char* port = commport;
 
 
@@ -626,18 +630,23 @@ namespace AtmSystem {
 
 
 				   if (*output == 'P') {
+					   id = 1;
 					   pictureBox1->BackgroundImage = Image::FromFile("c:\\SECOND SCREEN.jpeg");
 					   textBox1->Text=("Pranshul Thapliyal");
+					   enable();
+
 					   break;
 
 				   }
 				   else if (*output == 'R') {
+					   id = 2;
 					   pictureBox1->BackgroundImage = Image::FromFile("c:\\SECOND SCREEN.jpeg");
 					   textBox1->Text=("Rohan Rautela");
 					   break;
 				   }
 
 				   else if (*output == 'K') {
+					   id = 3;
 					   pictureBox1->BackgroundImage = Image::FromFile("c:\\SECOND SCREEN.jpeg");
 					   textBox1->Text=("Kritarth Khanduri");
 					   break;
@@ -649,36 +658,90 @@ namespace AtmSystem {
 				  private: System::Void button24_Click(System::Object^ sender, System::EventArgs^ e) {
 				  }
 
-						 private: void disable() {
+						 private: void enable() {
 
 
 
-							 button1->Enabled = false;
-							 button2->Enabled = false;
-							 button3->Enabled = false;
-							 button4->Enabled = false;
-							 button5->Enabled = false;
-							 button6->Enabled = false;
-							 button7->Enabled = false;
-							 button8->Enabled = false;
-							 button9->Enabled = false;
-							 button10->Enabled = false;
-							 button11->Enabled = false;
-							 button12->Enabled = false;
-							 button13->Enabled = false;
-							 button14->Enabled = false;
-							 button15->Enabled = false;
-							 button16->Enabled = false;
-							 button17->Enabled = false;
-							 button18->Enabled = false;
-							 button19->Enabled = false;
-							 button20->Enabled = false;
-							 button21->Enabled = false;
-							 button22->Enabled = false;
+							 button1->Enabled = true;
+							 button2->Enabled = true;
+							 button3->Enabled = true;
+							 button4->Enabled = true;
+							 button5->Enabled = true;
+							 button6->Enabled = true;
+							 button7->Enabled = true;
+							 button8->Enabled = true;
+							 button9->Enabled = true;
+							 button10->Enabled = true;
+							 button11->Enabled = true;
+							 button12->Enabled = true;
+							 button13->Enabled = true;
+							 button14->Enabled = true;
+							 button15->Enabled = true;
+							 button16->Enabled = true;
+							 button17->Enabled = true;
+							 button18->Enabled = true;
+							 button19->Enabled = true;
+							 button20->Enabled = true;
+							 button21->Enabled = true;
+							 button22->Enabled = true;
 
 						 }
 
+								 private: void disable() {
 
+
+
+									 button1->Enabled = false;
+									 button2->Enabled = false;
+									 button3->Enabled = false;
+									 button4->Enabled = false;
+									 button5->Enabled = false;
+									 button6->Enabled = false;
+									 button7->Enabled = false;
+									 button8->Enabled = false;
+									 button9->Enabled = false;
+									 button10->Enabled = false;
+									 button11->Enabled = false;
+									 button12->Enabled = false;
+									 button13->Enabled = false;
+									 button14->Enabled = false;
+									 button15->Enabled = false;
+									 button16->Enabled = false;
+									 button17->Enabled = false;
+									 button18->Enabled = false;
+									 button19->Enabled = false;
+									 button20->Enabled = false;
+									 button21->Enabled = false;
+									 button22->Enabled = false;
+
+								 }
+
+
+private: System::Void button4_Click(System::Object^ sender, System::EventArgs^ e) {
+
+	SqlConnection^ con = gcnew SqlConnection("Data Source=DESKTOP-L186BBJ;Initial Catalog=project;Integrated Security=True");
+
+	con->Open();
+	if (con->State == System::Data::ConnectionState::Open) {
+		textBox2->AppendText("DB Connected");
+	}
+
+
+	String^ q = "SELECT * FROM Cred WHERE ID = 1;";
+	SqlCommand^ cmd = gcnew SqlCommand(q,con);
+	//cmd->ExecuteNonQuery();
+	SqlDataReader^ dr = cmd->ExecuteReader();
+	while (dr->Read()) {
+		//textBox2->Text = dr->GetString(2);
+		int tmp = dr->GetInt32(dr->GetOrdinal("Balance"));
+		textBox2->Text = tmp.ToString();
+	}
+
+
+
+
+
+}
 };
 }
 
