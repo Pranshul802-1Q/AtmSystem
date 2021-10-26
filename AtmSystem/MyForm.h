@@ -2,7 +2,8 @@
 #include "SerialPort.h"
 
 
-int id;
+int id, tmp, amount;
+char trans;
 
 
 
@@ -102,6 +103,9 @@ namespace AtmSystem {
 	private: System::Windows::Forms::Button^ button23;
 	public: System::Windows::Forms::TextBox^ textBox1;
 	private: System::Windows::Forms::TextBox^ textBox2;
+	private: System::Windows::Forms::TextBox^ textBox3;
+	private: System::Windows::Forms::TextBox^ textBox4;
+	private: System::Windows::Forms::TextBox^ textBox5;
 	public:
 
 
@@ -148,6 +152,8 @@ namespace AtmSystem {
 			this->button8 = (gcnew System::Windows::Forms::Button());
 			this->button7 = (gcnew System::Windows::Forms::Button());
 			this->panel3 = (gcnew System::Windows::Forms::Panel());
+			this->textBox5 = (gcnew System::Windows::Forms::TextBox());
+			this->textBox4 = (gcnew System::Windows::Forms::TextBox());
 			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
 			this->button23 = (gcnew System::Windows::Forms::Button());
 			this->pictureBox1 = (gcnew System::Windows::Forms::PictureBox());
@@ -158,6 +164,7 @@ namespace AtmSystem {
 			this->button3 = (gcnew System::Windows::Forms::Button());
 			this->button2 = (gcnew System::Windows::Forms::Button());
 			this->button1 = (gcnew System::Windows::Forms::Button());
+			this->textBox3 = (gcnew System::Windows::Forms::TextBox());
 			this->panel1->SuspendLayout();
 			this->panel2->SuspendLayout();
 			this->panel4->SuspendLayout();
@@ -240,6 +247,7 @@ namespace AtmSystem {
 			this->button21->Size = System::Drawing::Size(154, 76);
 			this->button21->TabIndex = 15;
 			this->button21->UseVisualStyleBackColor = true;
+			this->button21->Click += gcnew System::EventHandler(this, &MyForm::button21_Click);
 			// 
 			// button20
 			// 
@@ -281,6 +289,7 @@ namespace AtmSystem {
 			this->button17->Size = System::Drawing::Size(88, 72);
 			this->button17->TabIndex = 11;
 			this->button17->UseVisualStyleBackColor = true;
+			this->button17->Click += gcnew System::EventHandler(this, &MyForm::button17_Click);
 			// 
 			// button16
 			// 
@@ -301,6 +310,7 @@ namespace AtmSystem {
 			this->button15->Size = System::Drawing::Size(86, 74);
 			this->button15->TabIndex = 9;
 			this->button15->UseVisualStyleBackColor = true;
+			this->button15->Click += gcnew System::EventHandler(this, &MyForm::button15_Click);
 			// 
 			// button14
 			// 
@@ -311,6 +321,7 @@ namespace AtmSystem {
 			this->button14->Size = System::Drawing::Size(87, 74);
 			this->button14->TabIndex = 8;
 			this->button14->UseVisualStyleBackColor = true;
+			this->button14->Click += gcnew System::EventHandler(this, &MyForm::button14_Click);
 			// 
 			// button13
 			// 
@@ -321,6 +332,7 @@ namespace AtmSystem {
 			this->button13->Size = System::Drawing::Size(87, 75);
 			this->button13->TabIndex = 7;
 			this->button13->UseVisualStyleBackColor = true;
+			this->button13->Click += gcnew System::EventHandler(this, &MyForm::button13_Click);
 			// 
 			// button12
 			// 
@@ -331,6 +343,7 @@ namespace AtmSystem {
 			this->button12->Size = System::Drawing::Size(88, 74);
 			this->button12->TabIndex = 6;
 			this->button12->UseVisualStyleBackColor = true;
+			this->button12->Click += gcnew System::EventHandler(this, &MyForm::button12_Click);
 			// 
 			// button10
 			// 
@@ -341,6 +354,7 @@ namespace AtmSystem {
 			this->button10->Size = System::Drawing::Size(87, 74);
 			this->button10->TabIndex = 5;
 			this->button10->UseVisualStyleBackColor = true;
+			this->button10->Click += gcnew System::EventHandler(this, &MyForm::button10_Click);
 			// 
 			// button11
 			// 
@@ -351,6 +365,7 @@ namespace AtmSystem {
 			this->button11->Size = System::Drawing::Size(88, 75);
 			this->button11->TabIndex = 4;
 			this->button11->UseVisualStyleBackColor = true;
+			this->button11->Click += gcnew System::EventHandler(this, &MyForm::button11_Click);
 			// 
 			// button9
 			// 
@@ -361,6 +376,7 @@ namespace AtmSystem {
 			this->button9->Size = System::Drawing::Size(88, 74);
 			this->button9->TabIndex = 2;
 			this->button9->UseVisualStyleBackColor = true;
+			this->button9->Click += gcnew System::EventHandler(this, &MyForm::button9_Click);
 			// 
 			// button8
 			// 
@@ -371,6 +387,7 @@ namespace AtmSystem {
 			this->button8->Size = System::Drawing::Size(88, 75);
 			this->button8->TabIndex = 1;
 			this->button8->UseVisualStyleBackColor = true;
+			this->button8->Click += gcnew System::EventHandler(this, &MyForm::button8_Click);
 			// 
 			// button7
 			// 
@@ -381,11 +398,14 @@ namespace AtmSystem {
 			this->button7->Size = System::Drawing::Size(88, 75);
 			this->button7->TabIndex = 0;
 			this->button7->UseVisualStyleBackColor = true;
+			this->button7->Click += gcnew System::EventHandler(this, &MyForm::button7_Click);
 			// 
 			// panel3
 			// 
 			this->panel3->BackColor = System::Drawing::Color::Transparent;
 			this->panel3->BorderStyle = System::Windows::Forms::BorderStyle::Fixed3D;
+			this->panel3->Controls->Add(this->textBox5);
+			this->panel3->Controls->Add(this->textBox4);
 			this->panel3->Controls->Add(this->textBox1);
 			this->panel3->Controls->Add(this->button23);
 			this->panel3->Controls->Add(this->pictureBox1);
@@ -396,12 +416,41 @@ namespace AtmSystem {
 			this->panel3->Controls->Add(this->button3);
 			this->panel3->Controls->Add(this->button2);
 			this->panel3->Controls->Add(this->button1);
+			this->panel3->Controls->Add(this->textBox3);
 			this->panel3->ForeColor = System::Drawing::Color::Black;
 			this->panel3->Location = System::Drawing::Point(27, 24);
 			this->panel3->Margin = System::Windows::Forms::Padding(5);
 			this->panel3->Name = L"panel3";
 			this->panel3->Size = System::Drawing::Size(660, 393);
 			this->panel3->TabIndex = 0;
+			// 
+			// textBox5
+			// 
+			this->textBox5->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(0)), static_cast<System::Int32>(static_cast<System::Byte>(20)),
+				static_cast<System::Int32>(static_cast<System::Byte>(130)));
+			this->textBox5->BorderStyle = System::Windows::Forms::BorderStyle::None;
+			this->textBox5->Font = (gcnew System::Drawing::Font(L"Mongolian Baiti", 13.8F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->textBox5->Location = System::Drawing::Point(275, 224);
+			this->textBox5->Name = L"textBox5";
+			this->textBox5->Size = System::Drawing::Size(100, 27);
+			this->textBox5->TabIndex = 14;
+			this->textBox5->Visible = false;
+			// 
+			// textBox4
+			// 
+			this->textBox4->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(0)), static_cast<System::Int32>(static_cast<System::Byte>(20)),
+				static_cast<System::Int32>(static_cast<System::Byte>(130)));
+			this->textBox4->BorderStyle = System::Windows::Forms::BorderStyle::None;
+			this->textBox4->Font = (gcnew System::Drawing::Font(L"MS Gothic", 16.2F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->textBox4->Location = System::Drawing::Point(166, 163);
+			this->textBox4->Multiline = true;
+			this->textBox4->Name = L"textBox4";
+			this->textBox4->Size = System::Drawing::Size(326, 55);
+			this->textBox4->TabIndex = 13;
+			this->textBox4->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
+			this->textBox4->Visible = false;
 			// 
 			// textBox1
 			// 
@@ -515,6 +564,16 @@ namespace AtmSystem {
 			this->button1->TabIndex = 1;
 			this->button1->UseVisualStyleBackColor = true;
 			// 
+			// textBox3
+			// 
+			this->textBox3->BackColor = System::Drawing::Color::WhiteSmoke;
+			this->textBox3->BorderStyle = System::Windows::Forms::BorderStyle::None;
+			this->textBox3->Location = System::Drawing::Point(166, 156);
+			this->textBox3->Multiline = true;
+			this->textBox3->Name = L"textBox3";
+			this->textBox3->Size = System::Drawing::Size(326, 62);
+			this->textBox3->TabIndex = 12;
+			// 
 			// MyForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
@@ -544,7 +603,7 @@ namespace AtmSystem {
 	private: System::Void MyForm_Load(System::Object^ sender, System::EventArgs^ e) {
 		disable();
 
-		char commport[] = "\\\\.\\COM5";
+		char commport[] = "\\\\.\\COM3";
 		char* port = commport;
 
 
@@ -561,7 +620,7 @@ namespace AtmSystem {
 		MyForm:Show();
 		Application::DoEvents();
 	    //constring = "Data Source=DESKTOP-L186BBJ;Initial Catalog=project;Integrated Security=True";
-		  SqlConnection^ con = gcnew SqlConnection("Data Source=DESKTOP-L186BBJ;Initial Catalog=project;Integrated Security=True");
+		  SqlConnection^ con = gcnew SqlConnection("Data Source=HP-BS180TX;Initial Catalog=project;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
 			
 		  con->Open();
 		  if (con->State == System::Data::ConnectionState::Open) {
@@ -585,6 +644,24 @@ namespace AtmSystem {
 	private: System::Void button18_Click(System::Object^ sender, System::EventArgs^ e) {
 	}
 	private: System::Void button6_Click(System::Object^ sender, System::EventArgs^ e) {
+		
+		trans = 'w';
+
+		textBox4->Visible = TRUE;
+		textBox5->Visible = TRUE;
+
+		pictureBox1->BackgroundImage = Image::FromFile("c:\\AX SCREEN.jpeg");
+		pictureBox1->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
+
+		textBox4->AppendText("Please Enter The Amount To Withdraw");
+
+
+
+		
+
+
+
+
 	}
 
 
@@ -608,7 +685,7 @@ namespace AtmSystem {
 
 		   private: void function() {
 			   char output[MAX_DATA_LENGTH];
-			   char commport[] = "\\\\.\\COM5";
+			   char commport[] = "\\\\.\\COM3";
 			   char* port = commport;
 
 
@@ -642,6 +719,7 @@ namespace AtmSystem {
 					   id = 2;
 					   pictureBox1->BackgroundImage = Image::FromFile("c:\\SECOND SCREEN.jpeg");
 					   textBox1->Text=("Rohan Rautela");
+					   enable();
 					   break;
 				   }
 
@@ -649,10 +727,61 @@ namespace AtmSystem {
 					   id = 3;
 					   pictureBox1->BackgroundImage = Image::FromFile("c:\\SECOND SCREEN.jpeg");
 					   textBox1->Text=("Kritarth Khanduri");
+					   enable();
 					   break;
 				   }
 			   }
 		   }
+
+
+				  private: void withdrawal() {
+
+
+					  amount = Int32::Parse(textBox5->Text);
+				  
+
+						 SqlConnection^ con = gcnew SqlConnection("Data Source=HP-BS180TX;Initial Catalog=project;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
+
+						 con->Open();
+						 if (con->State == System::Data::ConnectionState::Open) {
+							 textBox2->AppendText("DB Connected");
+						 }
+
+						 String^ q = "SELECT * FROM credentials WHERE ID = " + id + "; ";
+						 SqlCommand^ cmd = gcnew SqlCommand(q, con);
+						 //cmd->ExecuteNonQuery();
+						 SqlDataReader^ dr = cmd->ExecuteReader();
+						 while (dr->Read()) {
+							 //textBox2->Text = dr->GetString(2);
+							 tmp = dr->GetInt32(dr->GetOrdinal("Balance"));
+
+						 }
+						 dr->Close();
+
+						 if (amount > tmp) {
+							 textBox4->AppendText("Requested Amount Exceeds Available Balance");
+							 trans = 'z';
+
+						 }
+
+						 else {
+							 int finalBal = tmp - amount;
+							 String^ q = "UPDATE credentials SET Balance = " + finalBal + " WHERE ID = " + id + " ";
+							 SqlCommand^ cmd = gcnew SqlCommand(q, con);
+							 cmd->ExecuteNonQuery();
+							 trans = 'z';
+							 textBox4->Text = "Transaction Successful";
+							 textBox5->Text = "";
+							 Sleep(1000);
+
+							 //Application::Restart();
+
+						 }
+
+
+
+
+				  }
 
 
 				  private: System::Void button24_Click(System::Object^ sender, System::EventArgs^ e) {
@@ -719,7 +848,12 @@ namespace AtmSystem {
 
 private: System::Void button4_Click(System::Object^ sender, System::EventArgs^ e) {
 
-	SqlConnection^ con = gcnew SqlConnection("Data Source=DESKTOP-L186BBJ;Initial Catalog=project;Integrated Security=True");
+	textBox4->Visible = TRUE;
+
+	pictureBox1->BackgroundImage = Image::FromFile("c:\\AX SCREEN.jpeg");
+	pictureBox1->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
+
+	SqlConnection^ con = gcnew SqlConnection("Data Source=HP-BS180TX;Initial Catalog=project;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
 
 	con->Open();
 	if (con->State == System::Data::ConnectionState::Open) {
@@ -727,24 +861,135 @@ private: System::Void button4_Click(System::Object^ sender, System::EventArgs^ e
 	}
 
 
-	String^ q = "SELECT * FROM Cred WHERE ID = 1;";
+	String^ q = "SELECT * FROM credentials WHERE ID = "+id+"; ";
 	SqlCommand^ cmd = gcnew SqlCommand(q,con);
 	//cmd->ExecuteNonQuery();
 	SqlDataReader^ dr = cmd->ExecuteReader();
 	while (dr->Read()) {
 		//textBox2->Text = dr->GetString(2);
-		int tmp = dr->GetInt32(dr->GetOrdinal("Balance"));
-		textBox2->Text = tmp.ToString();
+		 tmp = dr->GetInt32(dr->GetOrdinal("Balance"));
+		textBox4->Text = "Available Balance is  ";
+		textBox4->AppendText(""+tmp.ToString()+"");
+	}
+	dr->Close();
+
+
+
+
+
+
+}
+private: System::Void button7_Click(System::Object^ sender, System::EventArgs^ e) {
+	if (textBox5->Text == "") {
+		textBox5->Text = "1";
 	}
 
-
-
-
-
+	else {
+		textBox5->Text = textBox5->Text + "1";
+	}
 }
+private: System::Void button11_Click(System::Object^ sender, System::EventArgs^ e) {
+
+	if (textBox5->Text == "") {
+		textBox5->Text = "2";
+	}
+
+	else {
+		textBox5->Text = textBox5->Text + "2";
+	}
+}
+private: System::Void button13_Click(System::Object^ sender, System::EventArgs^ e) {
+
+	if (textBox5->Text == "") {
+		textBox5->Text = "3";
+	}
+
+	else {
+		textBox5->Text = textBox5->Text + "3";
+	}
+}
+private: System::Void button8_Click(System::Object^ sender, System::EventArgs^ e) {
+
+	if (textBox5->Text == "") {
+		textBox5->Text = "4";
+	}
+
+	else {
+		textBox5->Text = textBox5->Text + "4";
+	}
+}
+private: System::Void button10_Click(System::Object^ sender, System::EventArgs^ e) {
+
+	if (textBox5->Text == "") {
+		textBox5->Text = "5";
+	}
+
+	else {
+		textBox5->Text = textBox5->Text + "5";
+	}
+}
+private: System::Void button14_Click(System::Object^ sender, System::EventArgs^ e) {
+
+	if (textBox5->Text == "") {
+		textBox5->Text = "6";
+	}
+
+	else {
+		textBox5->Text = textBox5->Text + "6";
+	}
+}
+private: System::Void button9_Click(System::Object^ sender, System::EventArgs^ e) {
+
+	if (textBox5->Text == "") {
+		textBox5->Text = "7";
+	}
+
+	else {
+		textBox5->Text = textBox5->Text + "7";
+	}
+}
+private: System::Void button12_Click(System::Object^ sender, System::EventArgs^ e) {
+
+	if (textBox5->Text == "") {
+		textBox5->Text = "8";
+	}
+
+	else {
+		textBox5->Text = textBox5->Text + "8";
+	}
+}
+private: System::Void button15_Click(System::Object^ sender, System::EventArgs^ e) {
+
+	if (textBox5->Text == "") {
+		textBox5->Text = "9";
+	}
+
+	else {
+		textBox5->Text = textBox5->Text + "9";
+	}
+}
+private: System::Void button17_Click(System::Object^ sender, System::EventArgs^ e) {
+
+	if (textBox5->Text == "") {
+		textBox5->Text = "0";
+	}
+
+	else {
+		textBox5->Text = textBox5->Text + "0";
+	}
+}
+	private: System::Void button21_Click(System::Object^ sender, System::EventArgs^ e) {
+
+		if (trans == 'w') {
+			withdrawal();
+		}
+	}
+	
+
+
+
 };
 }
-
 
 
 
