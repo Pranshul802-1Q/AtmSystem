@@ -2,6 +2,8 @@
 #include "SerialPort.h"
 
 
+
+
 int id, tmp, amount;
 char trans;
 
@@ -104,6 +106,7 @@ namespace AtmSystem {
 	public: System::Windows::Forms::TextBox^ textBox1;
 	private: System::Windows::Forms::TextBox^ textBox2;
 	private: System::Windows::Forms::TextBox^ textBox3;
+	private: System::Windows::Forms::TextBox^ textBox6;
 	private: System::Windows::Forms::TextBox^ textBox4;
 	private: System::Windows::Forms::TextBox^ textBox5;
 	public:
@@ -152,6 +155,7 @@ namespace AtmSystem {
 			this->button8 = (gcnew System::Windows::Forms::Button());
 			this->button7 = (gcnew System::Windows::Forms::Button());
 			this->panel3 = (gcnew System::Windows::Forms::Panel());
+			this->textBox6 = (gcnew System::Windows::Forms::TextBox());
 			this->textBox5 = (gcnew System::Windows::Forms::TextBox());
 			this->textBox4 = (gcnew System::Windows::Forms::TextBox());
 			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
@@ -258,6 +262,7 @@ namespace AtmSystem {
 			this->button20->Size = System::Drawing::Size(155, 73);
 			this->button20->TabIndex = 14;
 			this->button20->UseVisualStyleBackColor = true;
+			this->button20->Click += gcnew System::EventHandler(this, &MyForm::button20_Click);
 			// 
 			// button19
 			// 
@@ -268,6 +273,7 @@ namespace AtmSystem {
 			this->button19->Size = System::Drawing::Size(156, 75);
 			this->button19->TabIndex = 13;
 			this->button19->UseVisualStyleBackColor = true;
+			this->button19->Click += gcnew System::EventHandler(this, &MyForm::button19_Click);
 			// 
 			// button18
 			// 
@@ -404,6 +410,7 @@ namespace AtmSystem {
 			// 
 			this->panel3->BackColor = System::Drawing::Color::Transparent;
 			this->panel3->BorderStyle = System::Windows::Forms::BorderStyle::Fixed3D;
+			this->panel3->Controls->Add(this->textBox6);
 			this->panel3->Controls->Add(this->textBox5);
 			this->panel3->Controls->Add(this->textBox4);
 			this->panel3->Controls->Add(this->textBox1);
@@ -423,6 +430,17 @@ namespace AtmSystem {
 			this->panel3->Name = L"panel3";
 			this->panel3->Size = System::Drawing::Size(660, 393);
 			this->panel3->TabIndex = 0;
+			// 
+			// textBox6
+			// 
+			this->textBox6->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(0)), static_cast<System::Int32>(static_cast<System::Byte>(20)),
+				static_cast<System::Int32>(static_cast<System::Byte>(130)));
+			this->textBox6->Location = System::Drawing::Point(139, 53);
+			this->textBox6->Multiline = true;
+			this->textBox6->Name = L"textBox6";
+			this->textBox6->Size = System::Drawing::Size(376, 294);
+			this->textBox6->TabIndex = 15;
+			this->textBox6->Visible = false;
 			// 
 			// textBox5
 			// 
@@ -520,6 +538,7 @@ namespace AtmSystem {
 			this->button5->Size = System::Drawing::Size(122, 36);
 			this->button5->TabIndex = 5;
 			this->button5->UseVisualStyleBackColor = true;
+			this->button5->Click += gcnew System::EventHandler(this, &MyForm::button5_Click);
 			// 
 			// button4
 			// 
@@ -552,6 +571,7 @@ namespace AtmSystem {
 			this->button2->Size = System::Drawing::Size(126, 38);
 			this->button2->TabIndex = 2;
 			this->button2->UseVisualStyleBackColor = true;
+			this->button2->Click += gcnew System::EventHandler(this, &MyForm::button2_Click);
 			// 
 			// button1
 			// 
@@ -563,6 +583,7 @@ namespace AtmSystem {
 			this->button1->Size = System::Drawing::Size(126, 36);
 			this->button1->TabIndex = 1;
 			this->button1->UseVisualStyleBackColor = true;
+			this->button1->Click += gcnew System::EventHandler(this, &MyForm::button1_Click);
 			// 
 			// textBox3
 			// 
@@ -640,12 +661,36 @@ namespace AtmSystem {
 		   
 		  
 	private: System::Void button3_Click(System::Object^ sender, System::EventArgs^ e) {
+
+		trans = 'd';
+		button1->Enabled = false;
+		button2->Enabled = false;
+		button3->Enabled = false;
+		button4->Enabled = false;
+		button5->Enabled = false;
+		button6->Enabled = false;
+
+		textBox4->Visible = TRUE;
+		textBox5->Visible = TRUE;
+
+		pictureBox1->BackgroundImage = Image::FromFile("c:\\AX SCREEN.jpeg");
+		pictureBox1->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
+
+		textBox4->AppendText("Please Enter The Amount To Deposit");
 	}
+
+
 	private: System::Void button18_Click(System::Object^ sender, System::EventArgs^ e) {
 	}
 	private: System::Void button6_Click(System::Object^ sender, System::EventArgs^ e) {
 		
 		trans = 'w';
+		button1->Enabled = false;
+		button2->Enabled = false;
+		button3->Enabled = false;
+		button4->Enabled = false;
+		button5->Enabled = false;
+		button6->Enabled = false;
 
 		textBox4->Visible = TRUE;
 		textBox5->Visible = TRUE;
@@ -761,17 +806,24 @@ namespace AtmSystem {
 						 if (amount > tmp) {
 							 textBox4->AppendText("Requested Amount Exceeds Available Balance");
 							 trans = 'z';
+							 disable();
+							 button20->Enabled = true;
 
 						 }
 
 						 else {
 							 int finalBal = tmp - amount;
 							 String^ q = "UPDATE credentials SET Balance = " + finalBal + " WHERE ID = " + id + " ";
+							 String^ q2 = "INSERT INTO transactions(ID,Dt,Type,Amount,Balance) VALUES(" + id + "," + "GETDATE()" + "," + "'WITHDRAWAL'" + ","+amount+"," + finalBal + ");";
 							 SqlCommand^ cmd = gcnew SqlCommand(q, con);
+							 SqlCommand^ cmd2 = gcnew SqlCommand(q2, con);
 							 cmd->ExecuteNonQuery();
+							 cmd2->ExecuteNonQuery();
 							 trans = 'z';
 							 textBox4->Text = "Transaction Successful";
 							 textBox5->Text = "";
+							 disable();
+							 button20->Enabled = true;
 							 Sleep(1000);
 
 							 //Application::Restart();
@@ -782,6 +834,59 @@ namespace AtmSystem {
 
 
 				  }
+
+
+
+
+
+						  private: void deposit() {
+
+
+							  amount = Int32::Parse(textBox5->Text);
+
+
+							  SqlConnection^ con = gcnew SqlConnection("Data Source=HP-BS180TX;Initial Catalog=project;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
+
+							  con->Open();
+							  if (con->State == System::Data::ConnectionState::Open) {
+								  textBox2->AppendText("DB Connected");
+							  }
+
+							  String^ q = "SELECT * FROM credentials WHERE ID = " + id + "; ";
+							  SqlCommand^ cmd = gcnew SqlCommand(q, con);
+							  //cmd->ExecuteNonQuery();
+							  SqlDataReader^ dr = cmd->ExecuteReader();
+							  while (dr->Read()) {
+								  //textBox2->Text = dr->GetString(2);
+								  tmp = dr->GetInt32(dr->GetOrdinal("Balance"));
+
+							  }
+							  dr->Close();
+
+							 
+							  {
+								  int finalBal = tmp + amount;
+								  String^ q = "UPDATE credentials SET Balance = " + finalBal + " WHERE ID = " + id + " ";
+								  String^ q2 = "INSERT INTO transactions(ID,Dt,Type,Amount,Balance) VALUES(" + id + "," + "GETDATE()" + "," + "'DEPOSIT'" + "," + amount + "," + finalBal + ");";
+								  SqlCommand^ cmd = gcnew SqlCommand(q, con);
+								  SqlCommand^ cmd2 = gcnew SqlCommand(q2, con);
+								  cmd->ExecuteNonQuery();
+								  cmd2->ExecuteNonQuery();
+								  trans = 'z';
+								  textBox4->Text = "Transaction Successful";
+								  textBox5->Text = "";
+								  disable();
+								  button20->Enabled = true; }
+								  
+
+								  //Application::Restart();
+
+							  
+
+
+
+
+						  }
 
 
 				  private: System::Void button24_Click(System::Object^ sender, System::EventArgs^ e) {
@@ -842,6 +947,7 @@ namespace AtmSystem {
 									 button20->Enabled = false;
 									 button21->Enabled = false;
 									 button22->Enabled = false;
+									 
 
 								 }
 
@@ -849,6 +955,9 @@ namespace AtmSystem {
 private: System::Void button4_Click(System::Object^ sender, System::EventArgs^ e) {
 
 	textBox4->Visible = TRUE;
+	disable();
+	button20->Enabled = true;
+
 
 	pictureBox1->BackgroundImage = Image::FromFile("c:\\AX SCREEN.jpeg");
 	pictureBox1->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
@@ -983,11 +1092,138 @@ private: System::Void button17_Click(System::Object^ sender, System::EventArgs^ 
 		if (trans == 'w') {
 			withdrawal();
 		}
+
+		if (trans == 'd') {
+			deposit();
+		}
 	}
 	
 
 
 
+private: System::Void button20_Click(System::Object^ sender, System::EventArgs^ e) {
+	Application::Restart();
+}
+	private: System::Void button19_Click(System::Object^ sender, System::EventArgs^ e) {
+		int l = textBox5->Text->Length;
+		if (l > 0) {
+			textBox5->Text=textBox5->Text->Remove(textBox5->Text->Length - 1);
+		}
+	}
+		
+
+private: System::Void button5_Click(System::Object^ sender, System::EventArgs^ e) {
+
+	pictureBox1->BackgroundImage = Image::FromFile("c:\\AX SCREEN.jpeg");
+	pictureBox1->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
+	Application::DoEvents();
+	amount = 500;
+	
+	textBox4->Enabled = true;
+	
+	textBox4->Visible = true;
+	SqlConnection^ con = gcnew SqlConnection("Data Source=HP-BS180TX;Initial Catalog=project;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
+
+	con->Open();
+	if (con->State == System::Data::ConnectionState::Open) {
+		textBox2->AppendText("DB Connected");
+	}
+
+	String^ q = "SELECT * FROM credentials WHERE ID = " + id + "; ";
+	SqlCommand^ cmd = gcnew SqlCommand(q, con);
+	//cmd->ExecuteNonQuery();
+	SqlDataReader^ dr = cmd->ExecuteReader();
+	while (dr->Read()) {
+		//textBox2->Text = dr->GetString(2);
+		
+		tmp = dr->GetInt32(dr->GetOrdinal("Balance"));
+
+	}
+
+	
+	dr->Close();
+
+	if (amount > tmp) {
+		textBox4->AppendText("Requested Amount Exceeds Available Balance");
+		trans = 'z';
+		disable();
+		button20->Enabled = true;
+
+	}
+
+	else {
+		int finalBal = tmp - amount;
+		String^ q = "UPDATE credentials SET Balance = " + finalBal + " WHERE ID = " + id + " ";
+		SqlCommand^ cmd = gcnew SqlCommand(q, con);
+		cmd->ExecuteNonQuery();
+		trans = 'z';
+		textBox4->Text = "Transaction Successful";
+		textBox5->Text = "";
+		disable();
+		button20->Enabled = true;
+		
+
+		//Application::Restart();
+
+	}
+
+}
+private: System::Void button2_Click(System::Object^ sender, System::EventArgs^ e) {
+	textBox6->Visible = true;
+	SqlConnection^ con = gcnew SqlConnection("Data Source=HP-BS180TX;Initial Catalog=project;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
+
+	con->Open();
+	if (con->State == System::Data::ConnectionState::Open) {
+		textBox2->AppendText("DB Connected");
+	}
+
+	String^ q = "SELECT * FROM transactions WHERE ID = " + id + "; ";
+	SqlCommand^ cmd = gcnew SqlCommand(q, con);
+	DataTable dt;
+	//cmd->ExecuteNonQuery();
+	SqlDataReader^ dr = cmd->ExecuteReader();
+	textBox6->AppendText("DATE-TIME\t\tTYPE\tAMT-BALANCE");
+	
+	while (dr->Read()) {
+		textBox6->AppendText("\r\n"+dr->GetDateTime(1)+" "+dr->GetString(2)+" "+dr->GetInt32(3)+" "+dr->GetInt32(4)+"\n");
+		textBox6->AppendText("\r\n");
+
+	//tmp = dr->GetInt32(dr->GetOrdinal("Balance"));
+
+	}
+				
+
+
+}
+
+	  
+private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
+
+	textBox6->Visible = true;
+	SqlConnection^ con = gcnew SqlConnection("Data Source=HP-BS180TX;Initial Catalog=project;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
+
+	con->Open();
+	if (con->State == System::Data::ConnectionState::Open) {
+		textBox2->AppendText("DB Connected");
+	}
+
+	String^ q = "SELECT * FROM credentials WHERE ID = " + id + "; ";
+	SqlCommand^ cmd = gcnew SqlCommand(q, con);
+	
+	
+	SqlDataReader^ dr = cmd->ExecuteReader();
+	
+
+	while (dr->Read()) {
+		textBox6->AppendText("\r\nID: " + dr->GetInt32(0) + "\r\nName: " + dr->GetString(1) + "\r\nCustomer Since: " + dr->GetDateTime(3) + "\r\nAccount Type: " + dr->GetString(4) + "\r\nAddress: "+dr->GetString(5));
+		
+
+		//tmp = dr->GetInt32(dr->GetOrdinal("Balance"));
+
+	}
+
+
+}
 };
 }
 
